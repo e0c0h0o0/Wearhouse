@@ -1,0 +1,72 @@
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `no` varchar(20) DEFAULT NULL COMMENT 'account',
+  `name` varchar(100) NOT NULL COMMENT 'name',
+  `password` varchar(20) NOT NULL COMMENT password',
+  `age` int(11) DEFAULT NULL,
+  `sex` int(11) DEFAULT NULL COMMENT 'sex',
+  `phone` varchar(20) DEFAULT NULL COMMENT 'phonenumber',
+  `role_id` int(11) DEFAULT NULL COMMENT '0-supervisor 1-manger 2-normal account',
+  `isValid` varchar(4) DEFAULT 'Y' COMMENT 'Y is valid,others are not valid',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES (1, 'sa', 'superviso', '123', 18, 1, '111', 0, 'Y');
+COMMIT;
+
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL,
+  `menuCode` varchar(8) DEFAULT NULL COMMENT 'menuCode',
+  `menuName` varchar(16) DEFAULT NULL COMMENT 'menuName',
+  `menuLevel` varchar(2) DEFAULT NULL COMMENT 'menuLevel',
+  `menuParentCode` varchar(8) DEFAULT NULL COMMENT 'menuParentCode',
+  `menuClick` varchar(16) DEFAULT NULL COMMENT 'menuClick',
+  `menuRight` varchar(8) DEFAULT NULL COMMENT '0-supervisor 1-manger 2-normal account',
+  `menuComponent` varchar(200) DEFAULT NULL,
+  `menuIcon` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+BEGIN;
+INSERT INTO `menu` VALUES (1, '001', '管理员管理', '1', NULL, 'Admin', '0', 'admin/AdminManage.vue', 'el-icon-s-custom');
+INSERT INTO `menu` VALUES (2, '002', '用户管理', '1', NULL, 'User', '0,1', 'user/UserManage.vue', 'el-icon-user-solid');
+INSERT INTO `menu` VALUES (3, '003', '仓库管理', '1', NULL, 'Storage', '0,1', 'storage/StorageManage', 'el-icon-office-building');
+INSERT INTO `menu` VALUES (4, '004', '物品分类管理', '1', NULL, 'Goodstype', '0,1', 'goodstype/GoodstypeManage', 'el-icon-menu');
+INSERT INTO `menu` VALUES (5, '005', '物品管理 ', '1', NULL, 'Goods', '0,1,2', 'goods/GoodsManage', 'el-icon-s-management');
+INSERT INTO `menu` VALUES (6, '006', '记录管理', '1', NULL, 'Record', '0,1,2', 'record/RecordManage', 'el-icon-s-order');
+COMMIT;
+
+
+DROP TABLE IF EXISTS `storage`;
+CREATE TABLE `storage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) NOT NULL COMMENT '仓库名',
+  `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `goodsType`;
+CREATE TABLE `goodsType` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) NOT NULL COMMENT '分类名',
+  `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) NOT NULL COMMENT '货名',
+  `storage` int(11) NOT NULL COMMENT '仓库',
+  `goodsType` int(11) NOT NULL COMMENT '分类',
+  `count` int(11) DEFAULT NULL COMMENT '数量',
+  `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
